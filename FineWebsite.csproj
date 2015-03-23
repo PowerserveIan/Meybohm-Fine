@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{227FC53C-9241-4B6F-9EE3-7DE49AA7BCBA}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FineWebsite</RootNamespace>
+    <AssemblyName>FineWebsite</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList">
+      <HintPath>..\Solution\packages\PagedList.1.16.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\Solution\packages\PagedList.Mvc.4.3.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Solution\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Solution\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Solution\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Solution\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\Solution\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AgentController.cs" />
+    <Compile Include="Controllers\AreaInformationController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LegalInformationController.cs" />
+    <Compile Include="Controllers\OfficeController.cs" />
+    <Compile Include="Controllers\PropertyController.cs" />
+    <Compile Include="Extensions\IDataReaderExtensions.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="Models\Agent.cs" />
+    <Compile Include="Models\AgentTestimonial.cs" />
+    <Compile Include="Models\Builder.cs" />
+    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Enumerations.cs" />
+    <Compile Include="Models\Neighborhood.cs" />
+    <Compile Include="Models\Office.cs" />
+    <Compile Include="Models\PagedList.cs" />
+    <Compile Include="Models\ShowcaseItem.cs" />
+    <Compile Include="Models\ShowcaseMedia.cs" />
+    <Compile Include="Models\State.cs" />
+    <Compile Include="Models\Team.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\Images\about.jpg" />
+    <Content Include="Content\Images\agent.jpg" />
+    <Content Include="Content\Images\Banners\banner1.jpg" />
+    <Content Include="Content\Images\Banners\banner2.jpg" />
+    <Content Include="Content\Images\bg-slidelink.png" />
+    <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\ico-eho.png" />
+    <Content Include="Content\Images\ico-fb.png" />
+    <Content Include="Content\Images\ico-luxury.jpg" />
+    <Content Include="Content\Images\ico-meybohm.png" />
+    <Content Include="Content\Images\ico-realtor.png" />
+    <Content Include="Content\Images\ico-slidelink.png" />
+    <Content Include="Content\Images\ico-tw.png" />
+    <Content Include="Content\Images\ico_luxry_port.jpg" />
+    <Content Include="Content\Images\logo.png" />
+    <Content Include="Content\Images\Props\placeholder.jpg" />
+    <Content Include="Content\Images\Props\prop-img.jpg" />
+    <Content Include="Content\Images\VirtualMag\December2013.png" />
+    <Content Include="Content\Images\VirtualMag\Spring2014.png" />
+    <Content Include="Content\Images\virtual_mag.jpg" />
+    <Content Include="Content\Scripts\flexslider\flexslider.css" />
+    <Content Include="Content\Scripts\flexslider\images\bg_direction_nav.png" />
+    <Content Include="Content\Scripts\flexslider\images\ico-slidernav.png" />
+    <Content Include="Content\Scripts\flexslider\js\froogaloop.js" />
+    <Content Include="Content\Scripts\flexslider\js\jquery.easing.js" />
+    <Content Include="Content\Scripts\flexslider\js\jquery.fitvid.js" />
+    <Content Include="Content\Scripts\flexslider\js\jquery.flexslider.js" />
+    <Content Include="Content\Scripts\flexslider\js\jquery.mousewheel.js" />
+    <Content Include="Content\Scripts\flexslider\js\modernizr.js" />
+    <Content Include="Content\Scripts\placeholder\jquery.placeholder.shim.js" />
+    <Content Include="Content\Scripts\site.js" />
+    <Content Include="Content\Styles\base.css" />
+    <Content Include="Content\Styles\custom.css" />
+    <Content Include="Content\Styles\emag.css" />
+    <Content Include="Content\Styles\skeleton.css" />
+    <Content Include="Content\Styles\styles.css" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Agent_GetCollectionByTeam.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseItemFinePropertyInformation_Update.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseItemFinePropertyInformation_Add.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseItemFinePropertyInformation_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseItem_GetCollectionByAgent.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Contact_Update.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Contact_Add.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Agent_GetCollection.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_AgentTestimonial_GetCollection.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Address_GetCities.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Country_GetCollectiont.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_State_GetCollectiont.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Team_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Builder_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseMedia_GetCollection.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseMedia_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_State_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Office_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Neighborhood_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Agent_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_Address_Get.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseItem_GetByMLSID.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseItem_GetCollection.sql" />
+    <Content Include="Database\Stored Procedures\dbo.ps_ShowcaseItem_Get.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_CMPageGetByCMFileNameAndLanguageID.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_CreateCMPageTitlesFromCMPages.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_CreatePageForMicrosite.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_DeleteAllSMItemsUsers.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_GetAllPagesNeedingApproval.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_GetAllSMItemsNeedingApproval.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_IsMenuItemParentByPageRoles.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_LoadContentRegion.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_PageNeedsApproval.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_PopulateNewMicrosite.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_UpdateMicrositesWithDefaultContent.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_CMS_UpdateSMItemsOnParentItemDelete.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_DoesFilenameExist.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_ELMAH_GetRETSErrors.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_ELMAH_GetRETSErrors_New.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_GetDynamicSitemap.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_GetMaxDisplayOrder.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_Membership_GetCustomerListForCSV.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_Newsletter_MailingList_GetMailingListSubscribersWithEmailsByListOfMailingListIDs.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_OpenHouse_AddRecurringOpenHouses.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_RETS_ShowcaseItemAttributeAssign.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_SEOComponent_DeleteDataMicrositeOrFolder.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_SEOComponent_SitePageSEOSetupForOutput.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_Showcase_GetFilteredShowcaseItemIDs.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_Showcase_GetFilteredShowcaseItemIDs_OLD.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_Showcase_GetFilteredShowcaseItemIDs_PostFunction.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_Showcase_GetFilteredShowcaseItemIDs_PriceSeparateTest.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_Showcase_UpdateHistoricalStatData.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_StateAndCountry_ToggleShipTo.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_UpdateDefaultContent.StoredProcedure.sql" />
+    <Content Include="Database\Stored Procedures\Pre-Existing\dbo.CUSTOM_WhatsNearBy_GetLocationsNearCoordinates.StoredProcedure.sql" />
+    <Content Include="Database\Tables\dbo.Address.Table.sql" />
+    <Content Include="Database\Tables\dbo.Application.Table.sql" />
+    <Content Include="Database\Tables\dbo.Builder.Table.sql" />
+    <Content Include="Database\Tables\dbo.BuilderMicrosite.Table.sql" />
+    <Content Include="Database\Tables\dbo.ClickType.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMMicrosite.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMMicrositeUser.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMPage.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMPageRegion.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMPageRole.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMPageTitle.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMRegion.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMSubmittedForm.Table.sql" />
+    <Content Include="Database\Tables\dbo.CMTemplate.Table.sql" />
+    <Content Include="Database\Tables\dbo.Contact.Table.sql" />
+    <Content Include="Database\Tables\dbo.ContactMethod.Table.sql" />
+    <Content Include="Database\Tables\dbo.ContactStatus.Table.sql" />
+    <Content Include="Database\Tables\dbo.ContactTime.Table.sql" />
+    <Content Include="Database\Tables\dbo.ContactType.Table.sql" />
+    <Content Include="Database\Tables\dbo.Country.Table.sql" />
+    <Content Include="Database\Tables\dbo.Designation.Table.sql" />
+    <Content Include="Database\Tables\dbo.DynamicCollection.Table.sql" />
+    <Content Include="Database\Tables\dbo.DynamicImage.Table.sql" />
+    <Content Include="Database\Tables\dbo.DynamicImageCollection.Table.sql" />
+    <Content Include="Database\Tables\dbo.ELMAH_Error.Table.sql" />
+    <Content Include="Database\Tables\dbo.ELMAH_GetErrorsXml.StoredProcedure.sql" />
+    <Content Include="Database\Tables\dbo.ELMAH_GetErrorXml.StoredProcedure.sql" />
+    <Content Include="Database\Tables\dbo.ELMAH_LogError.StoredProcedure.sql" />
+    <Content Include="Database\Tables\dbo.JobTitle.Table.sql" />
+    <Content Include="Database\Tables\dbo.Languages.Table.sql" />
+    <Content Include="Database\Tables\dbo.MailingList.Table.sql" />
+    <Content Include="Database\Tables\dbo.MailingListSubscriber.Table.sql" />
+    <Content Include="Database\Tables\dbo.Mailout.Table.sql" />
+    <Content Include="Database\Tables\dbo.MailoutMailingList.Table.sql" />
+    <Content Include="Database\Tables\dbo.Neighborhood.Table.sql" />
+    <Content Include="Database\Tables\dbo.NeighborhoodBuilder.Table.sql" />
+    <Content Include="Database\Tables\dbo.Newsletter.Table.sql" />
+    <Content Include="Database\Tables\dbo.NewsletterAction.Table.sql" />
+    <Content Include="Database\Tables\dbo.NewsletterActionType.Table.sql" />
+    <Content Include="Database\Tables\dbo.NewsletterDesign.Table.sql" />
+    <Content Include="Database\Tables\dbo.NewsletterFormat.Table.sql" />
+    <Content Include="Database\Tables\dbo.NewsPress.Table.sql" />
+    <Content Include="Database\Tables\dbo.NewsPressCategory.Table.sql" />
+    <Content Include="Database\Tables\dbo.NewsPressNewsPressCategory.Table.sql" />
+    <Content Include="Database\Tables\dbo.Office.Table.sql" />
+    <Content Include="Database\Tables\dbo.OpenHouse.Table.sql" />
+    <Content Include="Database\Tables\dbo.PropertyChangeLog.Table.sql" />
+    <Content Include="Database\Tables\dbo.PropertyStatisticsEmailLog.Table.sql" />
+    <Content Include="Database\Tables\dbo.Redirect.Table.sql" />
+    <Content Include="Database\Tables\dbo.RetsStatus.Table.sql" />
+    <Content Include="Database\Tables\dbo.RetsTask.Table.sql" />
+    <Content Include="Database\Tables\dbo.RetsTaskStatus.Table.sql" />
+    <Content Include="Database\Tables\dbo.RetsUpdatePageTracker.Table.sql" />
+    <Content Include="Database\Tables\dbo.Role.Table.sql" />
+    <Content Include="Database\Tables\dbo.SavedSearch.Table.sql" />
+    <Content Include="Database\Tables\dbo.SecurityQuestion.Table.sql" />
+    <Content Include="Database\Tables\dbo.SEOData.Table.sql" />
+    <Content Include="Database\Tables\dbo.Showcase.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseAttribute.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseAttributeHeader.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseAttributeValue.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseFilter.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseItem.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseItemAttributeValue.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseItemMetric.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseItemMetricHistorical.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseItemRental.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseMedia.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseMediaCollection.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseMediaType.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseSettings.Table.sql" />
+    <Content Include="Database\Tables\dbo.ShowcaseUser.Table.sql" />
+    <Content Include="Database\Tables\dbo.SiteComponent.Table.sql" />
+    <Content Include="Database\Tables\dbo.SiteSettings.Table.sql" />
+    <Content Include="Database\Tables\dbo.SiteSettingsDataType.Table.sql" />
+    <Content Include="Database\Tables\dbo.SMItem.Table.sql" />
+    <Content Include="Database\Tables\dbo.SMItemUser.Table.sql" />
+    <Content Include="Database\Tables\dbo.SoldHome.Table.sql" />
+    <Content Include="Database\Tables\dbo.StaffType.Table.sql" />
+    <Content Include="Database\Tables\dbo.State.Table.sql" />
+    <Content Include="Database\Tables\dbo.Subscriber.Table.sql" />
+    <Content Include="Database\Tables\dbo.Team.Table.sql" />
+    <Content Include="Database\Tables\dbo.TeamLanguageSpoken.Table.sql" />
+    <Content Include="Database\Tables\dbo.User.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserDesignation.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserInfo.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserLanguageSpoken.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserOffice.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserOpenAuthProvider.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserRole.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserTeam.Table.sql" />
+    <Content Include="Database\Tables\dbo.UserTestimonial.Table.sql" />
+    <Content Include="Database\Tables\dbo.Video.Table.sql" />
+    <Content Include="Database\Tables\dbo.WhatsNearByCategory.Table.sql" />
+    <Content Include="Database\Tables\dbo.WhatsNearByLocation.Table.sql" />
+    <Content Include="Database\Tables\dbo.WhatsNearByLocationCategory.Table.sql" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Property\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Property\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Agent\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Agent\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Office\List.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\AreaInformation\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Contact.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\About.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\ContactComplete.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Agent\Listing.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LegalInformation\Insurance.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LegalInformation\PrivacyPolicy.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LegalInformation\Legal.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\LegalInformation\Copyright.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Property\VirtualMagazine.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:61699/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

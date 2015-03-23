@@ -1,0 +1,308 @@
+﻿@using FineWebsite.Models;
+
+@{
+    this.ViewBag.Title = "Property List";
+
+    PagedList<ShowcaseItem> listShowcaseItem = this.ViewBag.PagedListShowcaseItem as PagedList<ShowcaseItem>;
+    List<State> listState = this.ViewBag.ListState as List<State>;
+    List<Address> listCity = this.ViewBag.ListCity as List<Address>;
+    string[] showcaseItemTags = this.ViewBag.ShowcaseItemTags as string[];
+
+    var itemStart = ((listShowcaseItem.Page - 1) * listShowcaseItem.PageSize) + 1;
+    var itemEnd = Math.Min(((listShowcaseItem.Page - 1) * listShowcaseItem.PageSize) + listShowcaseItem.Count, listShowcaseItem.ItemCount);
+    var pagingStart = Math.Max(1, listShowcaseItem.Page - 2);
+    var pagingEnd = Math.Min(listShowcaseItem.PageCount, listShowcaseItem.Page + 2);
+}
+
+<div id="content dark">
+    <div class="container">
+        <div class="four columns alpha">
+            <div id="aside" class="clearfix">
+                <form action="@this.Url.Action("List", "Property")" method="post" onsubmit="return Validate();" style="color: white;">
+                    <input id="page" name="page" type="hidden" value="@this.ViewBag.Page" />
+                    <input id="pageAmount" name="pageAmount" type="hidden" value="@this.ViewBag.PageAmount" />
+                    <input id="sortBy" name="sortBy" type="hidden" value="@this.ViewBag.SortBy" />
+                    <input id="sortDirection" name="sortDirection" type="hidden" value="@this.ViewBag.SortDirection" />
+
+                    <h3>Quick Search</h3>
+                    <select id="stateId" name="stateId">
+                        <option value="">State</option>
+                        @if (listState != null && listState.Count > 0)
+                        {
+                            foreach (var state in listState)
+                            {
+                                <option value="@state.StateId" @(this.ViewBag.StateId == state.StateId ? "selected=\"selected\"" : "")>@state.Name</option>
+                            }
+                        }
+                    </select>
+                    <select class="end" id="city" name="city">
+                        <option value="">City</option>
+                        @if (listCity != null && listCity.Count > 0)
+                        {
+                            foreach (var city in listCity)
+                            {
+                                <option value="@city.City" @(this.ViewBag.City == city.City ? "selected=\"selected\"" : "")>@city.City</option>
+                            }
+                        }
+                    </select>
+
+                    <input type="text" placeholder="Min Price" id="listPriceMin" name="listPriceMin" value="@this.ViewBag.ListPriceMin" />
+                    <input type="text" placeholder="Max Price" class="end" id="listPriceMax" name="listPriceMax" value="@this.ViewBag.ListPriceMax" />
+
+                    <select id="bedsMin" name="bedsMin">
+                        <option value="">Beds</option>
+                        @for (int index = 1; index < 10; index++)
+                        {
+                            if (this.ViewBag.BedsMin == index)
+                            {
+                                <option value="@index" selected="selected">@index</option>
+                            }
+                            else
+                            {
+                                <option value="@index">@index</option>
+                            }
+                        }
+                    </select>
+                    <select class="end" id="bathsMin" name="bathsMin">
+                        <option value="">Baths</option>
+                        @for (int index = 1; index < 10; index++)
+                        {
+                            if (this.ViewBag.BathsMin == index)
+                            {
+                                <option value="@index" selected="selected">@index</option>
+                            }
+                            else
+                            {
+                                <option value="@index">@index</option>
+                            }
+                        }
+                    </select>
+
+                    <label>
+                        <input type="checkbox" name="showcaseItemTags" value="|Equestrian|" @(showcaseItemTags.Contains("|Equestrian|") ? "checked=\"checked\"" : "")/> Equestrian
+                    </label>
+                    <label>
+                        <input type="checkbox" name="showcaseItemTags" value="|Estate|" @(showcaseItemTags.Contains("|Estate|") ? "checked=\"checked\"" : "")/> Estate
+                    </label>
+                    <label>
+                        <input type="checkbox" name="showcaseItemTags" value="|Waterfront|" @(showcaseItemTags.Contains("|Waterfront|") ? "checked=\"checked\"" : "")/> Waterfront
+                    </label>
+                    <label>
+                        <input type="checkbox" name="showcaseItemTags" value="|Golf|" @(showcaseItemTags.Contains("|Golf|") ? "checked=\"checked\"" : "")/> Golf
+                    </label>
+                    <label>
+                        <input type="checkbox" name="showcaseItemTags" value="|Historic|" @(showcaseItemTags.Contains("|Historic|") ? "checked=\"checked\"" : "")/> Historic
+                    </label>
+                    <label>
+                        <input type="checkbox" name="showcaseItemTags" value="|Acreage|" @(showcaseItemTags.Contains("|Acreage|") ? "checked=\"checked\"" : "")/> Acreage
+                    </label>
+                    <div class="clear"></div>
+                    <input class="btn" type="submit" value="Search Now" onclick="ClearPage(); return Validate();" />
+                    <div id="mls">
+                        <input class="mls" type="text" placeholder="MLS, Keyword, City, State" id="genericFilter" name="genericFilter" value="@this.ViewBag.GenericFilter" />
+                        <input class="btn go" value="Go" type="submit" onclick="return Validate();" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="twelve columns omega">
+            <div id="results-bar">
+                <div id="result-filters">
+                    <h4>Results</h4>
+                    <label>
+                        20<input type="radio" class="pageAmount" name="pageSize" value="20" @if (listShowcaseItem.PageSize == 20) {  @: checked="checked"
+                                                                                                             } />
+                    </label>
+                    <label>
+                        40<input type="radio" class="pageAmount" name="pageSize" value="40" @if (listShowcaseItem.PageSize == 40) {  @: checked="checked"
+                                                                                                             } />
+                    </label>
+                    <label>
+                        60<input type="radio" class="pageAmount" name="pageSize" value="60" @if (listShowcaseItem.PageSize == 60) {  @: checked="checked"
+                                                                                                             } />
+                    </label>
+
+                    <h4>Sort By</h4>
+                    <label>
+                        List Price<input type="radio" class="sortBy" name="sortValue" value="ListPrice" @if (string.IsNullOrEmpty(this.ViewBag.SortBy) || this.ViewBag.SortBy == "ListPrice") {  @: checked="checked"
+                                                                                                                                     } />
+                    </label>
+                    <label>
+                        Date Listed<input type="radio" class="sortBy" name="sortValue" value="DateListed" @if (this.ViewBag.SortBy == "DateListed") {  @: checked="checked"
+                                                                                                                                      } />
+                    </label>
+                    <h4>Order</h4>
+                    <label>
+                        Ascending<input type="radio" class="sortDirection" name="sortDir" value="1" @if (this.ViewBag.SortDirection == 1) {  @: checked="checked"
+                                                                                                                                    } />
+                    </label>
+                    <label>
+                        Decending<input type="radio" class="sortDirection" name="sortDir" value="-1" @if (this.ViewBag.SortDirection == -1) {  @: checked="checked"
+                                                                                                                                    } />
+                    </label>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div id="pager">
+                @if (listShowcaseItem.PageCount > 1)
+                {
+                    for (var index = pagingStart; index <= pagingEnd; index++)
+                    {
+                        if (index == listShowcaseItem.Page)
+                        {
+                            <a class="pageIndex active" href="#">@index</a>
+                        }
+                        else
+                        {
+                            <a class="pageIndex" href="#">@index</a>
+                        }
+                    }
+                    <a class="btn PagedList-skipToPrevious @(listShowcaseItem.Page == 1 ? "disabled" : "")" href=" #">Previous</a>
+                    <a class="btn PagedList-skipToNext @(listShowcaseItem.Page == listShowcaseItem.PageCount ? "disabled" : "")" href=" #">Next</a>
+                }
+            </div>
+            <div class="clear"></div>
+            <div id="results">
+                @if (listShowcaseItem != null && listShowcaseItem.Count > 0)
+                {
+                    int count = 1;
+                    foreach (var showcaseItem in listShowcaseItem.Data)
+                    {
+                        var listShowcaseItemMedia = ShowcaseMedia.GetCollection(showcaseItem.ShowcaseItemId, true);
+
+                        var showcaseItemAddress = showcaseItem.GetAddress();
+                        var showcaseItemState = showcaseItemAddress.GetState();
+
+                        if (showcaseItemState == null)
+                        {
+                            showcaseItemState = new State();
+                        }
+
+                        <div class="prop @(count%3 == 0 ? "end" : "")">
+                            <input type="hidden" class="mlsId" value="@showcaseItem.MlsId" />
+                        @if (@listShowcaseItemMedia.Count > 0)
+                        {
+                            if (@listShowcaseItemMedia.Count > 1 && showcaseItem.IsFineFeatured)
+                            {
+                                <div class="overflow">
+                                    <img src="@listShowcaseItemMedia[1].ImageLink" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="overflow">
+                                    <img src="@listShowcaseItemMedia.FirstOrDefault().ImageLink" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="overflow">
+                                <img src="@this.Url.Content("~/Content/Images/Props/placeholder.jpg")" />
+                            </div>
+                        }
+
+                        <p class="price"><span>Price | @showcaseItem.ListPrice.ToString("c").Replace(".00", "")</span><br /><span class="mls">MLS: @showcaseItem.MlsId</span></p>
+                        <p class="info"><span style="width: 100%; padding: 0;">@showcaseItemAddress.Address1<br /> @showcaseItemAddress.City @showcaseItemState.Abb @showcaseItemAddress.Zip</span> <span>Sq/Ft: @showcaseItem.SquareFeet</span> <span>Bed(s): @showcaseItem.Bedrooms</span> <span>Bath(s): @showcaseItem.Baths</span> <span>@(showcaseItem.HalfBaths > 0 ? "Half Bath(s): " + @showcaseItem.HalfBaths : "")</span> </p>
+                    </div>
+
+                        count++;
+                    }
+                }
+            </div>
+            <div class="clear"></div>
+            <div id="pager">
+                @if (listShowcaseItem.PageCount > 1)
+                {
+                    for (var index = pagingStart; index <= pagingEnd; index++)
+                    {
+                        if (index == listShowcaseItem.Page)
+                        {
+                            <a class="pageIndex active" href="#">@index</a>
+                        }
+                        else
+                        {
+                            <a class="pageIndex" href="#">@index</a>
+                        }
+                    }
+                    <a class="btn PagedList-skipToPrevious @(listShowcaseItem.Page == 1 ? "disabled" : "")" href=" #">Previous</a>
+                    <a class="btn PagedList-skipToNext @(listShowcaseItem.Page == listShowcaseItem.PageCount ? "disabled" : "")" href=" #">Next</a>
+                }
+            </div>
+        </div>
+    </div>
+
+@section javascript
+{
+    <script type="text/javascript">
+        $(function () {
+            InitializeEventHandlers();
+
+            InitializeOnClickHandlers();
+        });
+
+        //*****************************
+        //***** Utility Functions *****
+        //*****************************
+
+        function InitializeEventHandlers() {
+            $('.pageAmount').on('click', function () {
+                $('#pageAmount').val($(this).val());
+            });
+
+            $('.sortBy').on('click', function () {
+                $('#sortBy').val($(this).val());
+            });
+
+            $('.sortDirection').on('click', function () {
+                $('#sortDirection').val($(this).val());
+            });
+
+            $('.prop').on('click', function () {
+                var mlsId = $(this).children('.mlsId').val();
+                var redirectLink = "@this.Url.Action("Index", "Property", new { id = "mlsId" })";
+                redirectLink = redirectLink.replace("mlsId", mlsId);
+
+                window.location = redirectLink;
+
+            });
+        }
+
+        function InitializeOnClickHandlers() {
+            $('.PagedList-skipToPrevious').on('click', function () {
+                if (!$(this).hasClass('disabled')) {
+                    var currentPage = parseInt($('#page').val()) - 1;
+                    $('#page').val(currentPage);
+
+                    $('form').submit();
+                }
+            });
+
+            $('.PagedList-skipToNext').on('click', function () {
+                if (!$(this).hasClass('disabled')) {
+                    var currentPage = parseInt($('#page').val()) + 1;
+                    $('#page').val(currentPage);
+
+                    $('form').submit();
+                }
+            });
+
+            $('.pageIndex').on('click', function () {
+                if (!$(this).hasClass('active')) {
+                    var currentPage = parseInt($(this).text());
+                    $('#page').val(currentPage);
+
+                    $('form').submit();
+                }
+            });
+        }
+
+        function ClearPage() {
+            $('#page').val(1);
+        }
+
+        function Validate() {
+            return true;
+        }
+    </script>
+}

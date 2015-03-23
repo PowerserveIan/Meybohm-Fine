@@ -1,0 +1,70 @@
+﻿/** This stylesheet is used to customize the website per page/class basis and is kept
+    separate from the styles.css file to eliminate confusion. */
+.contact #phone, #email {
+    margin-left: 10px;
+}
+
+.contact select {
+    height: 30px;
+}
+
+.disabled {
+    display: none!important;
+}
+
+.error {
+    border: 1px solid red;
+}
+
+.errorText {
+    color: red;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.paging { border-bottom:1px solid #dbdbdb; border-top:1px solid #dbdbdb; padding:10px 0; }
+.paging .pages { float:left; margin:5px 10px 5px 5px; }
+.paging .pages a { padding:0 5px; border:1px solid #ccc; color:#fff; text-decoration:none; }
+.paging .pages a.active { background:#AC0B0B; }
+.paging .btn { margin:0!important; font-family:arial; padding:3px 15px; }
+
+.pagingCustom { float:left; margin:10px 10px 5px 5px; }
+.pagingCustom a:not(.btn) { padding:0 5px; border:1px solid #ccc; color:#fff; text-decoration:none; }
+.pagingCustom a.active { background:#AC0B0B; }
+.pagingCustom .btn { margin:0!important; font-family:arial; padding:3px 15px; }
+
+#agentForm {
+    margin-top: 5px;
+}
+
+#agentFormTitle {
+    padding-top: 5px;
+}
+
+#pager a:not(.btn) { margin: 0px 5px 0 0; padding: 1px 4px; border: 1px solid #ccc; color: #fff; text-decoration: none; float: left; }
+#pager a.active { background:#AC0B0B; }
+#pager .btn { margin:0!important; font-family:arial; padding:3px 15px; }
+
+#agents .agent .box { height:315px; }
+#agents .agent .box .overflow { background:#404040; border:1px solid #dbdbdb; height:190px; margin:0px auto 10px auto; overflow:hidden; position:relative; width:175px; }
+#agents .agent .box .overflow img { border:none; margin:0px; padding:0px; width:175px; }
+#agent_profile .info img { width:175px; }
+#prop-info .agent img { width:100px; }
+
+#results .prop .overflow img { position:absolute; }
+
+@media only screen and (min-width:1280px){
+	#results .prop .overflow { height:155px; overflow:hidden; position:relative; width:100%; }
+}
+@media only screen and (min-width:960px) and (max-width:1279px){
+	#results .prop .overflow { height:110px; overflow:hidden; position:relative; width:100%; }
+}
+@media only screen and (min-width:768px) and (max-width:959px){
+	#results .prop .overflow { height:140px; overflow:hidden; position:relative; width:100%; }
+}
+@media only screen and (min-width:480px) and (max-width:767px){
+	#results .prop .overflow { height:100px; overflow:hidden; position:relative; width:100%; }
+}
+@media only screen and (max-width:479px){
+	#results .prop .overflow { height:155px; overflow:hidden; position:relative; width:100%; }
+}

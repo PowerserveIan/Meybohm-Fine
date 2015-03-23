@@ -1,0 +1,178 @@
+﻿@using FineWebsite.Models;
+
+@{
+    this.ViewBag.Title = "Home";
+    PagedList<ShowcaseItem> listFeaturedShowcaseItem = this.ViewBag.ListFeaturedShowcaseItem as PagedList<ShowcaseItem>;
+    List<State> listState = this.ViewBag.ListState as List<State>;
+    List<Address> listCity = this.ViewBag.ListCity as List<Address>;
+}
+
+<div id="banner" class="flexslider">
+	<ul class="slides">
+        @if(listFeaturedShowcaseItem != null && listFeaturedShowcaseItem.Count > 0)
+        {
+            foreach(var featuredShowcaseItem in listFeaturedShowcaseItem.Data)
+            {
+                var featuredMediaCollection = ShowcaseMedia.GetCollection(featuredShowcaseItem.ShowcaseItemId, true);
+
+                if(featuredMediaCollection != null && featuredMediaCollection.Count > 0)
+                {
+                    var featuredAddress = featuredShowcaseItem.GetAddress();
+                    var featuredNeighborhood = featuredShowcaseItem.GetNeighborhood();
+
+                    if (featuredNeighborhood == null)
+                    {
+                        featuredNeighborhood = new Neighborhood();
+                    }
+                    
+		            <li>
+			            <img alt="" src="@featuredMediaCollection.FirstOrDefault().ImageLink" />
+			            <div class="container">
+				            <a class="link" href="@this.Url.Action("Index", "Property", new { id = featuredShowcaseItem.MlsId })">
+                                <strong>@featuredShowcaseItem.ListPrice.ToString("c").Replace(".00", "")</strong>
+                                <i class="address">@featuredAddress.Address1<br />@featuredAddress.City @featuredAddress.GetState().Name @featuredAddress.Zip</i><span></span>
+				            </a>
+			            </div>
+		            </li>
+                }
+            }
+        }
+	</ul>
+</div>
+
+<!-- Start Home Search -->
+<div class="container">
+	<div id="home-search-wide">
+		<form action="@this.Url.Action("List", "Property")" method="post" onsubmit="return true;" style="color: white;">
+			<h3>Quick Search</h3>
+			
+				<div id="mls">
+					<input class="mls" type="text" placeholder="MLS, Keyword, City, State" id="genericFilter" name="genericFilter" />
+					<input class="btn go" value="Go" type="submit" onclick="$('form').submit(); return false;"/>
+				</div>
+				
+				<div class="search-6-rows first">
+					<select id="stateId" name="stateId">
+						<option value="">State</option>
+						@if (listState != null && listState.Count > 0)
+							{
+								foreach (var state in listState)
+								{
+									<option value="@state.StateId" @if(this.ViewBag.StateId == state.StateId) { @: selected="selected"
+									} >@state.Name</option>
+								}
+							}
+					</select>
+					<select class="end" id="city" name="city">
+						<option value="">City</option>
+						@if (listCity != null && listCity.Count > 0)
+							{
+								foreach (var city in listCity)
+								{
+									<option value="@city.City" @if(this.ViewBag.City == city.City) { @: selected="selected"
+									} >@city.City</option>
+								}
+							}
+					</select>
+			</div>
+			
+			<div class="search-6-rows">
+					<input type="text" placeholder="Min Price" id="listPriceMin" name="listPriceMin" value="@this.ViewBag.ListPriceMin" />
+					<input type="text" placeholder="Max Price" class="end" id="listPriceMax" name="listPriceMax" value="@this.ViewBag.ListPriceMax" />
+			</div>
+			
+			<div class="search-6-rows">
+				<select id="bedsMin" name="bedsMin">
+					<option value="">Beds</option>
+					@for (int index = 1; index < 10; index++)
+					{
+						if (this.ViewBag.BedsMin == index)
+						{
+							<option value="@index" selected="selected">@index</option>
+						}
+						else
+						{
+							<option value="@index">@index</option>
+						}
+					}
+				</select>
+				<select class="end" id="bathsMin" name="bathsMin">
+					<option value="">Baths</option>
+					@for (int index = 1; index < 10; index++)
+					{
+						if (this.ViewBag.BathsMin == index)
+						{
+							<option value="@index" selected="selected">@index</option>
+						}
+						else
+						{
+							<option value="@index">@index</option>
+						}
+					}
+				</select>
+			</div>	
+		
+	<div class="search-6-rows-checks">		
+				<label><input type="checkbox" name="showcaseItemTags" value="|Equestrian|"/> Equestrian</label>
+				<label><input type="checkbox" name="showcaseItemTags" value="|Estate|"/> Estate</label>			
+	</div>	
+	<div class="search-6-rows-checks">		
+				<label><input type="checkbox" name="showcaseItemTags" value="|Waterfront|"/> Waterfront</label>
+				<label><input type="checkbox" name="showcaseItemTags" value="|Golf|"/> Golf</label>
+	</div>
+	<div class="search-6-rows-checks">
+				<label><input type="checkbox" name="showcaseItemTags" value="|Historic|" /> Historic</label>
+				<label><input type="checkbox" name="showcaseItemTags" value="|Acreage|" /> Acreage</label>
+	</div>
+	<div class="search-6-rows last">
+				<div class="clear"></div>
+				<input class="btn" type="submit" value="Search Now" onclick="$('form').submit(); return false;" />
+	</div>
+		</form>	
+	</div>
+</div>
+<!-- End Home Search -->
+	
+<!--<div id="callouts">
+	<div class="container" class="clearfix">
+		<a href="@this.Url.Action("List", "Property", new { showcaseItemTags = "|Equestrian|" })" title="Equestrian Properties">Equestrian</a>
+		<a href="@this.Url.Action("List", "Property", new { showcaseItemTags = "|Estate|" })" title="Estate Properties">Estate</a>
+		<a href="@this.Url.Action("List", "Property", new { showcaseItemTags = "|Waterfront|" })" title="Waterfront Properties">Waterfront</a>
+		<a href="@this.Url.Action("List", "Property", new { showcaseItemTags = "|Golf|" })" title="Golf Properties">Golf</a>
+		<a href="@this.Url.Action("List", "Property", new { showcaseItemTags = "|Historic|" })" title="Historic Properties">Historic</a>
+		<a class="last" href="@this.Url.Action("List", "Property", new { showcaseItemTags = "|Acreage|" })" title="Acreage Properties">Acreage</a>
+	</div>
+</div>-->
+		
+<div id="content">
+	<div class="container">
+		<div class="eleven columns alpha">
+			<h1>Meybohm Fine Luxury Properties</h1>
+				<p>
+                    Meybohm’s FINE program is dedicated exclusively to providing the level of service 
+                    and marketing expertise the finest properties deserve.
+                </p>
+ 
+			    <p>
+                    As the most successful real estate company in the area, Meybohm is in a unique 
+                    position to bring the resources and talent necessary to mount a world-class 
+                    campaign to sell your sporting and luxury property.  The combination of those 
+                    resources together with REALTORS&reg; whose names are synonymous with excellent service
+                     and quality, creates nothing short of the FINEST real estate division ever assembled.
+                </p>
+			 
+			    <p>
+                    When we recognize a certain level of quality in things like art, jewelry and homes there 
+                    is only one word to describe their excellence.
+                </p>
+			 
+			    <p>When buying or selling a luxury property, don’t worry, rely on Meybohm and you will be FINE.</p>
+		</div>
+		<div class="four columns omeg offset-by-one">
+			<div class="box">
+				<h4>Virtual Magazine</h4>
+                <a target="_blank" href="http://issuu.com/meybohmrealtors/docs/virtual_magazine_fall_2014"><img alt="Virtual Magazine" src="@this.Url.Content("~/Content/Images/VirtualMag/Fall2014.png")" /></a>
+			</div>
+		</div>
+	</div>
+</div>

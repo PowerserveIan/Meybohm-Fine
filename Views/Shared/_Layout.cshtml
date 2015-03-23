@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link type="image/x-icon" href="/content/images/favicon.ico" rel="shortcut icon" />
+
+    <!--Meta-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="Powerserve (http://powerserve.net)" />
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!--CSS-->
+    @if(ViewBag.Title != "Virtual Magazine")
+    { 
+        <link rel="stylesheet" href="@this.Url.Content("~/Content/Styles/base.css")">
+        <link rel="stylesheet" href="@this.Url.Content("~/Content/Styles/skeleton.css")">
+        <link rel="stylesheet" href="@this.Url.Content("~/Content/Styles/styles.css")">
+        <link rel="stylesheet" href="@this.Url.Content("~/Content/Styles/custom.css")">
+        <link rel="stylesheet" href="@this.Url.Content("~/Content/Scripts/flexslider/flexslider.css")">
+    }
+
+    @if (IsSectionDefined("header"))
+    {
+        @RenderSection("header")
+    }
+
+    <!--Scripts-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <!------------FlexSlider-->
+    <script type="text/javascript" src="@this.Url.Content("~/Content/Scripts/flexslider/js/jquery.flexslider.js")"></script>
+    <script type="text/javascript" src="@this.Url.Content("~/Content/Scripts/flexslider/js/modernizr.js")"></script>
+    <script type="text/javascript" src="@this.Url.Content("~/Content/Scripts/flexslider/js/jquery.easing.js")"></script>
+    <!------------TypeKit-->
+    <script type="text/javascript" src="//use.typekit.net/nth1uww.js"></script>
+    <script type="text/javascript">try { Typekit.load(); } catch (e) { }</script>
+    <!--ShareThis Code-->
+    <script type="text/javascript">var switchTo5x = true;</script>
+    <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+    <script type="text/javascript">stLight.options({ publisher: "327221a4-4a83-4d7f-9a74-2233528f1467", doNotHash: false, doNotCopy: false, hashAddressBar: false, onhover: false });</script>
+    <!------------Initialize-->
+    <script type="text/javascript" src="@this.Url.Content("~/Content/Scripts/placeholder/jquery.placeholder.shim.js")"></script>
+    <script type="text/javascript" src="@this.Url.Content("~/Content/Scripts/site.js")"></script>
+    <!------------Analytics /  Webmaster Tools-->
+    <!------------Site-wide javascript-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-29278350-1', 'meybohm-fine.com');
+        ga('send', 'pageview');
+
+    </script>
+    <!------------Page Specific JS-->
+    @if (IsSectionDefined("javascript"))
+    {
+        @RenderSection("javascript")
+    }
+</head>
+
+<body>
+    <div id="header">
+        <div class="container">
+            <a id="logo" href="/"><img alt="Meybohm Realtors - Fine Homes" src="@this.Url.Content("~/Content/Images/logo.png")" /></a>
+            <ul id="supernav">
+                <li><a class="first" href="@this.Url.Action("About", "Home")">About Us</a></li>
+                <li><a href="@this.Url.Action("Contact", "Home")">Contact</a></li>
+                <li class="right"><a class="fb" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffacebook.com/meybohmrealtors">facebook</a></li>
+                <li class="right"><a class="tw" target="_blank" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Ftwitter.com/meybohmrealtors">twitter</a></li>
+            </ul>
+            <h3 class="menu">- Menu -</h3>
+            <ul id="topnav">
+                <li><a href="@this.Url.Action("Index", "Home")" title="">Home</a></li>
+                <li><a href="@this.Url.Action("List", "Property")" title="">View Listings</a></li>
+                <li><a href="@this.Url.Action("List", "Agent")" title="">Agents</a></li>
+                <li><a href="@this.Url.Action("List", "Office")" title="">Offices</a></li>
+                <li><a href="@this.Url.Action("Index", "AreaInformation")" title="">Area Information</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- The body section of the page. -->
+    @RenderBody()
+
+    <div id="footer">
+        <div class="container">
+            <div class="six columns alpha">
+                <img class="left" src="@this.Url.Content("~/Content/Images/ico-realtor.png")" />
+                <img class="left" src="@this.Url.Content("~/Content/Images/ico-eho.png")" />
+
+                <p class="copy">&copy; 2013 MeybohmRealtors.  All Rights Reserved. 
+                <ul id="footermenu">
+                    <li><a href="@this.Url.Action("PrivacyPolicy", "LegalInformation")" title="Privacy Policy">Privacy Policy</a></li>
+                    <li><a href="@this.Url.Action("Insurance", "LegalInformation")" title="Insurance">Insurance</a></li>
+                    <li><a href="@this.Url.Action("Legal", "LegalInformation")" title="Legal">Legal</a></li>
+                    <li><a href="@this.Url.Action("Copyright", "LegalInformation")" title="Copyright">Copyright</a></li>
+                </ul>
+            </div>
+            <div class="ten columns omega">
+                <a href="http://meybohm.luxuryrealestate.com/en" target="_blank">
+                    <img class="right" src="@this.Url.Content("~/Content/Images/ico-luxury.jpg")" />
+                </a>
+                <a href="http://www.meybohm.com" target="_blank">
+                    <img class="right meybohm" src="@this.Url.Content("~/Content/Images/ico-meybohm.png")" />
+                </a>
+                <a href="http://meybohm.luxuryportfolio.com" target="_blank">
+                    <img class="right" src="@this.Url.Content("~/Content/Images/ico_luxry_port.jpg")" />
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

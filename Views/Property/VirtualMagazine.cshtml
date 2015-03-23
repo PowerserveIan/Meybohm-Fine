@@ -1,0 +1,212 @@
+﻿@using FineWebsite.Models;
+
+@{
+    ViewBag.Title = "Virtual Magazine";
+
+    // Get the default list of paged showcase items and initialize the agent list.
+    PagedList<ShowcaseItem> pagedListShowcaseItem = this.ViewBag.PagedListShowcaseItem as PagedList<ShowcaseItem>;
+    List<Agent> listAgent = new List<Agent>();
+    
+    // The current page count.
+    int currentPageCount = 0;
+    
+    // The current showcaseItem
+    int currentShowcaseItemCount = 0;
+    
+    // The current maximum amount of agents on the header.
+    int currentAgentMax = 7;
+    
+    // Determins the alternating pattern of the showcase items.
+    bool isAlt = false;
+}
+
+@section header
+{
+    <link rel="stylesheet" href="/content/styles/emag.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="/content/styles/emag.css" type="text/css" media="print" />
+}
+
+<img class="landing" src="/content/images/cover_placeholder.jpg" />
+
+@while (currentPageCount < pagedListShowcaseItem.PageCount)
+{
+    // Increase the count of the page.
+    currentPageCount++;
+
+    // Set the current agent max for the page.
+    currentAgentMax = currentPageCount % 2 == 1 ? 7 : 6;
+
+    // Set the current showcaseItemCount to 0.
+    currentShowcaseItemCount = 0;
+    
+    // Set alt to false (default)
+    isAlt = false;
+        
+    // Get the current page of showcase items.
+    pagedListShowcaseItem = ShowcaseItem.GetCollection(currentPageCount, 6);
+    listAgent = new List<Agent>();
+
+    // Loop through each showcaseItem to get
+    foreach (var showcaseItem in pagedListShowcaseItem.Data)
+    {
+        var listTeamMembers = Agent.GetCollectionByTeam(showcaseItem.TeamId);
+        var currentAgent = new Agent();
+
+        if (listTeamMembers != null && listTeamMembers.Count > 0)
+        {
+            foreach (var teamMember in listTeamMembers)
+            {
+                if (teamMember != null && listAgent.Count < currentAgentMax && !listAgent.Any(agent => agent.UserId == teamMember.UserId))
+                {
+                    listAgent.Add(teamMember);
+                }
+            }
+        }
+        else
+        {
+            currentAgent = Agent.Get(showcaseItem.AgentId);
+            if (currentAgent != null && listAgent.Count < currentAgentMax && !listAgent.Any(agent => agent.UserId == currentAgent.UserId))
+            {
+                listAgent.Add(currentAgent);
+            }
+        }
+    }
+    
+    <div class="header clearfix @(currentPageCount % 2 == 1 ? "seven" : "alt six")">
+        <div style="page-break-before: always; @(currentPageCount % 2 == 1 ? "height: 0px;" : "")"></div>
+        <div class="container">
+            @if(currentPageCount % 2 == 0)
+            {
+                <a class="logo" href="http://www.meybohmfine.com" target="_blank"><img src="/content/images/logo.png"></a>
+            }
+            @foreach (var agent in listAgent)
+            {
+                <div class="rep">
+                    <a href="mailto:@agent.Email">
+                        <p>
+                            <span>@agent.FirstName</span><br />
+                            @agent.LastName.ToLower()
+                        </p>
+                        <span>
+                            @if (!string.IsNullOrEmpty(agent.CellPhone))
+                            {
+                                @agent.CellPhone
+                            }
+                            else if (!string.IsNullOrEmpty(agent.OfficePhone))
+                            {
+                                @agent.OfficePhone
+                            }
+                        </span>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="clear"></div>
+    
+    <div class="content">
+        <div class="container clearfix white">
+            @foreach(var showcaseItem in pagedListShowcaseItem.Data)
+            {
+                var listShowcaseItemMedia = ShowcaseMedia.GetCollection(showcaseItem.ShowcaseItemId, true);
+                var listTeamMembers = Agent.GetCollectionByTeam(showcaseItem.TeamId);
+                
+                var showcaseItemAddress = showcaseItem.GetAddress();
+                var showcaseAgent = Agent.Get(showcaseItem.AgentId);
+                
+                <div class="prop @(isAlt ? "alt" : "") @(currentShowcaseItemCount >= 4 ? "last" : "")">
+                    <div class="inner">
+                        <a target="_blank" href="@this.Url.Action("Index", "Property", new { id = showcaseItem.MlsId }, "http")">
+                            <h3>@showcaseItemAddress.Address1</h3>
+                            <div class="overflow">
+                                @if (@listShowcaseItemMedia.Count > 0)
+                                {
+                                    if (@listShowcaseItemMedia.Count > 1 && showcaseItem.IsFineFeatured)
+                                    {
+                                        <img src="@listShowcaseItemMedia[1].ImageLink" />
+                                    }
+                                    else
+                                    {
+                                        <img src="@listShowcaseItemMedia.FirstOrDefault().ImageLink" />
+                                    }
+                                }
+                                else
+                                {
+                                    <img src="@this.Url.Content("~/Content/Images/Props/placeholder.jpg")" />
+                                }
+                            </div>
+                            <p>@showcaseItem.ShortDescription(50) &nbsp;</p>
+                            <h4>@showcaseItem.ListPrice.ToString("c").Replace(".00", "")</h4>
+                            <h5>
+                                @if(listTeamMembers != null && listTeamMembers.Count > 0)
+                                {
+                                    bool hasWritten = false;
+                                    
+                                    foreach(var teamMember in listTeamMembers)
+                                    {
+                                        if(hasWritten)
+                                        { 
+                                            @: or 
+                                        }
+                                        
+                                        @(teamMember.FirstName + " " + teamMember.LastName) @:-
+                                        if (!string.IsNullOrEmpty(teamMember.CellPhone))
+                                        {
+                                            @teamMember.CellPhone
+                                        }
+                                        else if (!string.IsNullOrEmpty(teamMember.OfficePhone))
+                                        {
+                                            @teamMember.OfficePhone
+                                        }
+
+                                        hasWritten = true;
+                                    }
+                                }
+                                else if(showcaseAgent != null)
+                                {
+                                    @(showcaseAgent.FirstName + " " + showcaseAgent.LastName) @:-
+                                    if (!string.IsNullOrEmpty(showcaseAgent.CellPhone))
+                                    {
+                                        @showcaseAgent.CellPhone
+                                    }
+                                    else if (!string.IsNullOrEmpty(showcaseAgent.OfficePhone))
+                                    {
+                                        @showcaseAgent.OfficePhone
+                                    }
+                                }
+                                &nbsp;
+                            </h5>
+                        </a>
+                    </div>
+                </div>
+                
+                // Toggle isAlt
+                isAlt = !isAlt;
+
+                currentShowcaseItemCount++;
+            }
+        </div>
+    </div>
+    <div class="clear"></div>
+    
+    <div class="footer clearfix @(currentPageCount % 2 == 1 ? "" : "alt")">
+        <div class="container">
+            <p class="page @(currentPageCount % 2 == 1 ? "left" : "right")">@pagedListShowcaseItem.Page</p>
+            <a class="left" target="_blank" href="http://meybohmfine.com/"><img class="left" src="/content/images/ico_emag1.jpg" /></a>
+            <a class="left" target="_blank" href="http://www.luxuryrealestate.com/professionals/4912-meybohm-realtors"><img class="left" src="/content/images/ico_emag2.jpg" /></a>
+            <a class="left" target="_blank" href="http://www.luxuryportfolio.com/fine_brokers_profile/meybohm_realtors.cfm"><img class="left" src="/content/images/ico_emag3.jpg" /></a>
+        </div>
+    </div>
+}
+
+@section Javascript
+{
+    <script type="text/javascript">
+        $(function () {
+            $('#header').hide();
+            $('#footer').hide();
+
+            window.print();
+        });
+    </script>
+}

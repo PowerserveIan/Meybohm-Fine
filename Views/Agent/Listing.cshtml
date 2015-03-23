@@ -1,0 +1,123 @@
+﻿@using FineWebsite.Models;
+
+@{
+    ViewBag.Title = "Agent Listing";
+
+    Agent agent = this.ViewBag.Agent;
+    List<ShowcaseItem> listShowcaseItem = this.ViewBag.ListShowcaseItem;
+}
+
+<div id="content" class="dark">
+    <div class="container">
+        <h1 class="white">@agent.FirstName @agent.LastName</h1>
+        <div id="agent_profile" class="clearfix">
+            <div class="sixteen columns">
+                <div class="four columns alpha">
+                    <div class="info">
+                        <img src="@agent.PhotoLink" />
+                        <p>
+                            @if (!string.IsNullOrEmpty(agent.OfficePhone))
+                            {
+                                <span>Office: @agent.OfficePhone</span><br />
+                            }
+                            @if (!string.IsNullOrEmpty(agent.CellPhone))
+                            {
+                                <span>Cell: @agent.CellPhone</span>
+                            }
+                        </p>
+                        <a href="mailto:@agent.Email" class="btn">Email</a>
+                        <a href="@this.Url.Action("Index", "Agent", new { id = agent.UserId })" class="btn">&lsaquo; Back to Bio</a>
+                    </div>
+                </div>
+                <div class="twelve columns omega">
+                    <div id="results">
+                        <h3>My Listings</h3>
+                                                @if (listShowcaseItem != null && listShowcaseItem.Count > 0)
+                        {
+                            int count = 1;
+                            foreach (var showcaseItem in listShowcaseItem)
+                            {
+                                var listShowcaseItemMedia = ShowcaseMedia.GetCollection(showcaseItem.ShowcaseItemId, true);
+
+                                var showcaseItemAddress = showcaseItem.GetAddress();
+                                var showcaseItemState = showcaseItemAddress.GetState();
+
+                                if (showcaseItemState == null)
+                                {
+                                    showcaseItemState = new State();
+                                }
+
+                                <div class="prop @if (count%3 == 0)
+                                    {
+                                        @:end
+                                                                                                              } ">
+                                <input type="hidden" class="mlsId" value="@showcaseItem.MlsId" />
+                                @if (@listShowcaseItemMedia.Count > 0)
+                                {
+                                    if (@listShowcaseItemMedia.Count > 1 && showcaseItem.IsFineFeatured)
+                                    {
+                                        <div class="overflow">
+                                            <img src="@listShowcaseItemMedia[1].ImageLink" />
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="overflow">
+                                            <img src="@listShowcaseItemMedia.FirstOrDefault().ImageLink" />
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="overflow">
+                                        <img src="@this.Url.Content("~/Content/Images/Props/placeholder.jpg")" />
+                                    </div>
+                                }
+
+                                <p class="price"><span>Price | @showcaseItem.ListPrice.ToString("c").Replace(".00", "")</span><br /><span class="mls">MLS: @showcaseItem.MlsId</span></p>
+                                <p class="info"><span style="width: 100%; padding: 0;">@showcaseItemAddress.Address1<br />@showcaseItemAddress.City @showcaseItemState.Abb @showcaseItemAddress.Zip</span> <span>Sq/Ft: @showcaseItem.SquareFeet</span> <span>Bed(s): @showcaseItem.Bedrooms</span> <span>Bath(s): @showcaseItem.Baths</span> <span>@(showcaseItem.HalfBaths > 0 ? "Half Bath(s): " + @showcaseItem.HalfBaths : "")</span> </p>
+                            </div>
+
+                                count++;
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    @section javascript
+{
+        <script type="text/javascript">
+            $(function () {
+                InitializeEventHandlers();
+            });
+
+            //*****************************
+            //***** Utility Functions *****
+            //*****************************
+
+            function InitializeEventHandlers() {
+                $('.prop').on('click', function () {
+                    var mlsId = $(this).children('.mlsId').val();
+                    var redirectLink = "@this.Url.Action("Index", "Property", new { id = "mlsId" })";
+                    redirectLink = redirectLink.replace("mlsId", mlsId);
+
+                    window.location = redirectLink;
+
+                });
+            }
+
+            function ClearPage() {
+                $('#page').val(1);
+            }
+
+            function Validate() {
+                return true;
+            }
+        </script>
+    }

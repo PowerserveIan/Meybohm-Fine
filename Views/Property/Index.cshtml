@@ -1,0 +1,190 @@
+﻿@using FineWebsite.Models;
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    this.ViewBag.Title = "Property Details";
+
+    ShowcaseItem showcaseItem = this.ViewBag.ShowcaseItem as ShowcaseItem;
+    List<ShowcaseMedia> listShowcaseMedia = this.ViewBag.ListShowcaseMedia as List<ShowcaseMedia>;
+    List<Agent> listAgent = this.ViewBag.ListAgent as List<Agent>;
+    var showcaseItemAddress = showcaseItem.GetAddress();
+    var showcaseItemState = showcaseItemAddress.GetState();
+    var showcaseItemAgent = showcaseItem.GetAgent();
+
+    var contactString = "";
+}
+
+<div id="content" class="dark">
+	<div class="container">
+		<div class="eight columns omega">
+			<div id="prop-slider-wrap">
+				<div id="prop-slider" class="flexslider">
+					<ul class="slides">
+                        @{
+                            if(listShowcaseMedia != null && listShowcaseMedia.Count > 0)
+                            {
+                                if(showcaseItem.IsFineFeatured && listShowcaseMedia.Count > 1)
+                                {
+                                    listShowcaseMedia.RemoveAt(0);
+                                }
+                                
+                                
+                                foreach(var showcaseMedia in listShowcaseMedia)
+                                {
+						            <li>
+                                        <img alt="@showcaseMedia.Caption" src="@showcaseMedia.ImageLink" />
+						            </li>
+                                }
+                            }
+                        }
+					</ul>
+				</div>
+				<div id="prop-carousel" class="flexslider">
+                    @if(listShowcaseMedia != null && listShowcaseMedia.Count > 1)
+                    {
+					<ul class="slides">
+                        @foreach(var showcaseMedia in listShowcaseMedia)
+                        {
+						    <li>
+                                <img alt="@showcaseMedia.Caption" src="@showcaseMedia.ImageLink" />
+						    </li>
+                        }
+					</ul>
+                    }
+				</div>
+                
+			</div>
+		</div>
+		<div class="eight columns omega">
+			<div id="prop-info">
+				<div class="title">
+					<h3 class="name">@showcaseItemAddress.Address1, @showcaseItemAddress.City @showcaseItemState.Abb @showcaseItemAddress.Zip </h3>
+                    <h3 class="mls">MLS @showcaseItem.MlsId</h3>
+					<h3 class="price">@showcaseItem.ListPrice.ToString("c").Replace(".00", "")</h3>
+				</div>
+				<div id="sharethis">
+					<span class='st_sharethis'></span>
+					<span class='st_facebook'></span>
+					<span class='st_twitter'></span>
+					<span class='st_linkedin'></span>
+					<span class='st_pinterest'></span>
+					<span class='st_email'></span>
+				</div>
+				<div class="info">
+					<p>Sq/Ft: @showcaseItem.SquareFeet | Bedrooms: @showcaseItem.Bedrooms | Bathrooms: @showcaseItem.Baths @(showcaseItem.HalfBaths > 0 ? "| Half Baths: " + @showcaseItem.HalfBaths : "")</p>
+					@if(!string.IsNullOrEmpty(showcaseItem.VirtualTourURL))
+                    {
+                        <a class="btn" target="_blank" href="@showcaseItem.VirtualTourURL">Virtual Tour</a>
+                    }
+				</div>
+				<div class="what-makes-it">
+					<h3>What Makes It Fine</h3>
+					@if (!string.IsNullOrEmpty(showcaseItem.Features))
+                    {
+                        string[] newLineSeparator = new string[] { "\r\n" };
+                        var arrShowcaseItemFeatures = showcaseItem.Features.Split(newLineSeparator, StringSplitOptions.RemoveEmptyEntries);
+
+                        // Initialize the amount of features and the max row length for the features in the each column.
+                        var featureCount = arrShowcaseItemFeatures.Length;
+                        var maxRowLength = featureCount / 2 + featureCount % 2;
+                        var featureIndex = 0;
+                            
+                        <ul>
+                            @for (int index = 0; index < maxRowLength; index++)
+                            {
+                                <li>@arrShowcaseItemFeatures[featureIndex]</li>
+                                
+                                featureIndex++;
+                            }
+                        </ul>
+                        <ul>
+                            @for (int index = 0; index < featureCount - maxRowLength; index++)
+                            {
+                                <li>@arrShowcaseItemFeatures[featureIndex]</li>
+                                
+                                featureIndex++;
+                            }
+                        </ul>
+                    }
+				</div>
+
+                @if (listAgent != null && listAgent.Count > 0)
+                {
+                    <div class="agent">
+                        <h3>Agent Information</h3>
+
+                        @foreach(var agent in listAgent)
+                        {
+                            contactString = "";
+                            
+                            <div class="clear"></div>
+                            <img class="left" src="@agent.PhotoLink" />
+                            <h4>@agent.FirstName @agent.LastName, @agent.JobTitle @agent.StaffType</h4>
+                            <p>
+                                @if (!string.IsNullOrEmpty(agent.OfficePhone))
+                                {
+                                    contactString += "Office: " + agent.OfficePhone + " |";
+                                }
+                                @if (!string.IsNullOrEmpty(agent.Fax))
+                                {
+                                    contactString += " Fax: " + agent.Fax + " |";
+                                }
+                                @if (!string.IsNullOrEmpty(agent.CellPhone))
+                                {
+                                    contactString += " Cell: " + agent.CellPhone;
+                                }
+                                
+                                @contactString.TrimEnd('|')
+                            </p>
+                            <a class="btn" href="@this.Url.Action("Index", "Agent", new { id = agent.UserId })">Contact Me</a>
+                            if (!string.IsNullOrEmpty(agent.Website))
+                            {
+                                <a class="btn" target="_blank" href="@agent.Website">Personal Website</a>
+                            }
+                        }
+                    </div>
+                }
+                else if (showcaseItemAgent != null)
+                {
+				    <div class="agent">
+					    <h3>Agent Information</h3>
+					    <img class="left" src="@showcaseItemAgent.PhotoLink" />
+					    <h4>@showcaseItemAgent.FirstName @showcaseItemAgent.LastName, @showcaseItemAgent.JobTitle @showcaseItemAgent.StaffType</h4>
+					    <p>
+                            @if(!string.IsNullOrEmpty(showcaseItemAgent.OfficePhone))
+                            {
+                                contactString += "Office: " + showcaseItemAgent.OfficePhone + " |";
+                            }
+                            @if (!string.IsNullOrEmpty(showcaseItemAgent.Fax))
+                            {
+                                contactString += " Fax: " + showcaseItemAgent.Fax + " |";
+                            }
+                            @if (!string.IsNullOrEmpty(showcaseItemAgent.CellPhone))
+                            {
+                                contactString += " Cell: " + showcaseItemAgent.CellPhone;
+                            }
+
+                            @contactString.TrimEnd('|')
+                        </p>
+					    <a class="btn" href="@this.Url.Action("Index", "Agent", new { id = showcaseItemAgent.UserId })">Contact Me</a>
+                        @if(!string.IsNullOrEmpty(showcaseItemAgent.Website))
+                        {
+					        <a class="btn" target="_blank" href="@showcaseItemAgent.Website">Personal Website</a>
+                        }
+				    </div>
+                }
+			</div>
+		</div>
+	</div>
+</div>
+<div id="content" class="red">
+	<div class="container">
+		<div class="sixteen columns">
+			<h1>Property Description</h1>
+			<p>@showcaseItem.Description</p>
+		</div>
+	</div>
+</div>
+
+

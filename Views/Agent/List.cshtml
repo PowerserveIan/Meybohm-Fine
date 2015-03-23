@@ -1,0 +1,152 @@
+﻿@using FineWebsite.Models;
+
+@{
+    ViewBag.Title = "Agent Listing";
+    
+    PagedList<Agent> listAgent = this.ViewBag.PagedListAgent as PagedList<Agent>;
+    var itemStart = ((listAgent.Page - 1) * listAgent.PageSize) + 1;
+    var itemEnd = Math.Min(((listAgent.Page - 1) * listAgent.PageSize) + listAgent.Count, listAgent.ItemCount);
+    var pagingStart = Math.Max(1, listAgent.Page - 3);
+    var pagingEnd = Math.Min(listAgent.PageCount, listAgent.Page + 3);
+}
+
+<div id="content" class="dark">
+	<div class="container">
+		<h1 class="white">Agents</h1>
+		<div class="search clearfix">
+            
+            <form id="agentForm" action="@this.Url.Action("List", "Agent")" method="post" onsubmit="return Validate();" style="color: white;">
+                <input id="page" name="page" type="hidden" value="@this.ViewBag.Page" />
+			    <input class="btn" id="submitPage" type="submit" />
+			    <input class="input" type="text" id="agentName" name="agentName" placeholder="Agent Name" value="@this.ViewBag.AgentName" />
+            </form>
+            <p id="agentFormTitle">Search Agents:</p>
+		</div>
+        @if(listAgent != null && listAgent.ItemCount > 1)
+            {
+		    <div class="clearfix pagingCustom">
+                @if(listAgent.PageCount > 1)
+                {
+                    for(var index = pagingStart; index <= pagingEnd; index++)
+                    {
+                        if(index == listAgent.Page)
+                        {
+				            <a class="pageIndex active" href="#">@index</a>
+                        }
+                        else
+                        {
+				            <a class="pageIndex" href="#">@index</a>
+                        }
+                    }
+                    <a class="btn PagedList-skipToPrevious @if (listAgent.Page == 1)
+                                        { @:disabled
+                                        }" href="#">Prev</a>
+				    <a class="btn PagedList-skipToNext @if (listAgent.Page == listAgent.PageCount)
+                                        { @:disabled
+                                        }"  href="#">Next</a>
+                }
+		    </div>
+            <div class="clear"></div>
+            }
+		<div id="agents" class="clearfix">
+        @if(listAgent != null && listAgent.Count > 0)
+        {
+            foreach(var agent in listAgent.Data)
+            {
+			    <div class="agent">
+                    <input type="hidden" class="agentId" value="@agent.UserId" />
+					 <a href="@this.Url.Action("Index", "Agent", new { id = agent.UserId })">
+						<div class="box">
+							<div class="overflow">
+								<img src="@agent.PhotoLink" />
+							</div>
+							<h4>@agent.FirstName @agent.LastName</h4>
+							<p>Office: @agent.OfficePhone<br />
+							Cell: @agent.CellPhone</p>
+							<a class="btn" href="@this.Url.Action("Index", "Agent", new { id = agent.UserId })">More Information</a>
+						</div>
+					</a>
+			    </div>
+            }
+        }
+        </div>
+        @if(listAgent != null && listAgent.ItemCount > 1)
+        {
+            if(listAgent.PageCount > 1)
+            {
+		    <div class="clearfix paging">
+			    <div class="pages">
+                    @for(var index = pagingStart; index <= pagingEnd; index++)
+                    {
+                        if(index == listAgent.Page)
+                        {
+				            <a class="pageIndex active" href="#">@index</a>
+                        }
+                        else
+                        {
+				            <a class="pageIndex" href="#">@index</a>
+                        }
+                    }
+			    </div>
+                <a class="btn PagedList-skipToPrevious @if (listAgent.Page == 1)
+                                { @:disabled
+                                } " href=" #">Prev</a>
+				<a class="btn PagedList-skipToNext @if (listAgent.Page == listAgent.PageCount)
+                                { @:disabled
+                                }"  href="#">Next</a>
+		    </div>
+            }
+        }
+	</div>
+</div>
+
+@section javascript
+{
+    <script type="text/javascript">
+        $(function () {
+            InitializeOnClickHandlers();
+        });
+
+        //*****************************
+        //***** Utility Functions *****
+        //*****************************
+
+        function InitializeOnClickHandlers() {
+            $('.PagedList-skipToPrevious').on('click', function () {
+                if (!$(this).hasClass('disabled')) {
+                    var currentPage = parseInt($('#page').val()) - 1;
+                    $('#page').val(currentPage);
+
+                    $('form').submit();
+                }
+            });
+
+            $('.PagedList-skipToNext').on('click', function () {
+                if (!$(this).hasClass('disabled')) {
+                    var currentPage = parseInt($('#page').val()) + 1;
+                    $('#page').val(currentPage);
+
+                    $('form').submit();
+                }
+            });
+
+            $('.pageIndex').on('click', function () {
+                if (!$(this).hasClass('active')) {
+                    var currentPage = parseInt($(this).text());
+                    $('#page').val(currentPage);
+
+                    $('form').submit();
+                }
+            });
+
+            $('#submitPage').on('click', function () {
+                $('#page').val(1);
+                $('form').submit();
+            });
+        }
+
+        function Validate() {
+            return true;
+        }
+    </script>
+}

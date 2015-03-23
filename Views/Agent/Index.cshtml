@@ -1,0 +1,58 @@
+﻿@using FineWebsite.Models;
+
+@{
+    ViewBag.Title = "Agent Details";
+    
+    Agent agent = this.ViewBag.Agent as Agent;
+    List<AgentTestimonial> listAgentTestimonial = this.ViewBag.ListAgentTestimonial as List<AgentTestimonial>;
+}
+
+<div id="content" class="dark">
+    <div class="container">
+	    <h1 class="white">@agent.FirstName @agent.LastName</h1>
+	    <div id="agent_profile" class="clearfix">
+		    <div class="sixteen columns">
+			    <div class="four columns alpha">
+				    <div class="info">
+					    <img src="@agent.PhotoLink" />
+					    <p>
+                            @if (!string.IsNullOrEmpty(agent.OfficePhone))
+                            {
+                                <span>Office: @agent.OfficePhone</span><br />
+                            }
+                            @if (!string.IsNullOrEmpty(agent.CellPhone))
+                            {
+                                <span>Cell: @agent.CellPhone</span>
+                            }
+                        </p>
+					    <a href="mailto:@agent.Email" class="btn">Email</a>
+					    <a href="@this.Url.Action("Listing", "Agent", new { id = agent.UserId })" class="btn">View Fine Listings</a>
+                        @if (!string.IsNullOrEmpty(agent.Website))
+                        {
+                            <a class="btn" target="_blank" href="@agent.Website">Personal Website</a>
+                        }
+				    </div>
+			    </div>
+			    <div class="eight columns">
+				    <div class="bio">
+					    <h4>About this FINE Agent</h4>
+					    <p>@agent.Biography</p>
+				    </div>
+			    </div>
+			    <div class="four columns omega">
+				    <div class="testimonials">
+                        @if (@listAgentTestimonial != null && @listAgentTestimonial.Count > 0)
+                        {
+                            <h4>Testimonials</h4>
+                            foreach (var agentTestimonial in listAgentTestimonial)
+                            {
+                                <p>"@agentTestimonial.Testimonial"<br />@agentTestimonial.GiverNameAndLocation</p>
+                            }
+                        }
+				    </div>
+			    </div>
+		    </div>
+					
+	    </div>
+    </div>
+</div>
